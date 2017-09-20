@@ -40,3 +40,10 @@ ul{
 li{
   list-style-type: none;
 }
+
+.error{
+  display: inline-block;
+  margin-top: 5px;
+  color:red;
+  height:20px;
+}

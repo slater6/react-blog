@@ -1,27 +1,52 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import { TodoForm, TodoList }  from './components/todo';
+import {addTodo} from './lib/TodoHelpers'
 import './App.css';
 
 class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-      todos:[
-        {id:1, name:'Learn JSX',isComplete:false},
-        {id:2, name:'Learn Redux',isComplete:true},
-        {id:3, name:'Learn Vue',isComplete:false},
-      ],
-      currentTodo: ''
-    }
-
-    this.handleInputChange = this.handleInputChange.bind(this);
+  
+  state = {
+    todos:[
+      {id:1, name:'Learn JSX',isComplete:false},
+      {id:2, name:'Learn Redux',isComplete:true},
+      {id:3, name:'Learn Vue',isComplete:false},
+    ],
+    currentTodo: '',
+    errorMessage: ''
   }
 
-  handleInputChange(event){
+  handleInputChange = (event) => {
     this.setState({
-      currentTodo:event.target.value
+      currentTodo:event.target.value,
+      errorMessage: ''
     }); 
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    if(this.state.currentTodo === ""){
+      this.setState({
+        errorMessage: "Please enter a valid Todo item"
+      });
+      return;
+    }
+    
+    const newTodo = {
+      id: Math.floor((Math.random() * 1000) + 1),
+      name:this.state.currentTodo,
+      isComplete:false
+    }
+
+    const updatedTodos = addTodo(this.state.todos,newTodo);
+    
+    this.setState(
+      {
+        todos: updatedTodos,
+        currentTodo: ''
+      }
+    )
   }
 
   render() {
@@ -32,7 +57,8 @@ class App extends Component {
           <h2>React Todos</h2>
         </div> 
         <div className="Todo-App">
-          <TodoForm handleInputChange={this.handleInputChange} currentTodo={this.state.currentTodo}/>
+          <TodoForm handleInputChange={this.handleInputChange} handleSubmit={this.handleSubmit} currentTodo={this.state.currentTodo}/>
+          <span className="error">{this.state.errorMessage}</span>
           <TodoList todos={this.state.todos}/>
         </div>
       </div>
