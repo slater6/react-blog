@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import { TodoForm, TodoList }  from './components/todo';
+import { TodoForm, TodoList, Footer }  from './components/todo';
 import {addTodo, findById, toggleTodo, updateTodo, removeTodo} from './lib/TodoHelpers'
 import {partial,pipe} from './lib/utils'
 import './App.css';
@@ -94,6 +94,7 @@ class App extends Component {
           <span className="error">{this.state.errorMessage}</span>
           <TodoList handleToggle={this.handleToggle} handleMultipleTodoRemoval={this.handleMultipleTodoRemoval} handleTodoRemoval={this.handleTodoRemoval} todos={this.state.todos}/>
         </div>
+        <Footer></Footer>
       </div>
     );
   }

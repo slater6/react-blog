@@ -66,3 +66,11 @@ li a{
   color:red;
   height:20px;
 }
+
+.Footer {
+  padding:20px 0;
+}
+
+.Footer a{
+  padding: 20px 5px;
+}
