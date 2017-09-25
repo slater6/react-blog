@@ -74,3 +74,7 @@ li a{
 .Footer a{
   padding: 20px 5px;
 }
+
+.Footer a.active{
+  font-weight: bold;
+}

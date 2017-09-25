@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import PropTypes from 'prop-types';
 
 const getCurrentPath = () => {
     const path = document.location.pathname
@@ -18,6 +19,18 @@ export class Router extends Component{
         );
         
         window.history.pushState(null,'',route)
+    }
+
+    static childContextTypes = {
+        route:PropTypes.string,
+        linkHandler: PropTypes.func
+    }
+
+    getChildContext(){
+        return{
+            route:this.state.route,
+            linkHandler:this.handleLinkClick
+        }
     }
 
     render(){
