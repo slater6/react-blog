@@ -5,21 +5,23 @@ import { TodoForm, TodoList, Footer }  from './components/todo';
 import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/TodoHelpers'
 import {partial,pipe} from './lib/utils'
 import './App.css';
+import {loadTodos} from './lib/TodoService'
 
 class App extends Component {
   
   state = {
-    todos:[
-      {id:1, name:'Learn JSX',isComplete:false},
-      {id:2, name:'Learn Redux',isComplete:true},
-      {id:3, name:'Learn Vue',isComplete:false},
-    ],
+    todos:[],
     currentTodo: '',
     errorMessage: ''
   }
 
   static contextTypes = {
     route: PropTypes.string
+  }
+
+  async componentDidMount(){
+    const todos = await loadTodos() 
+    this.setState({todos})
   }
 
   handleToggle = (id) => {
