@@ -15,6 +15,6 @@ export class Link extends Component{
 
     render(){
         const activeClass = this.context.route === this.props.to ? 'active' : '';
-        return <a href="#" classNam={activeClass} onClick={this.handleClick}>{this.props.children}</a>
+        return <a href="#" className={activeClass} onClick={this.handleClick}>{this.props.children}</a>
     }
 }

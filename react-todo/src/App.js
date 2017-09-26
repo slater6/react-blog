@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import logo from './logo.svg';
 import { TodoForm, TodoList, Footer }  from './components/todo';
-import {addTodo, findById, toggleTodo, updateTodo, removeTodo} from './lib/TodoHelpers'
+import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/TodoHelpers'
 import {partial,pipe} from './lib/utils'
 import './App.css';
 
@@ -15,6 +16,10 @@ class App extends Component {
     ],
     currentTodo: '',
     errorMessage: ''
+  }
+
+  static contextTypes = {
+    route: PropTypes.string
   }
 
   handleToggle = (id) => {
@@ -83,6 +88,7 @@ class App extends Component {
   }
 
   render() {
+    const displayTodos = filterTodos(this.state.todos, this.context.route)
     return (
       <div className="App">
         <div className="App-header">
@@ -92,7 +98,7 @@ class App extends Component {
         <div className="Todo-App">
           <TodoForm handleInputChange={this.handleInputChange} handleSubmit={this.handleSubmit} currentTodo={this.state.currentTodo}/>
           <span className="error">{this.state.errorMessage}</span>
-          <TodoList handleToggle={this.handleToggle} handleMultipleTodoRemoval={this.handleMultipleTodoRemoval} handleTodoRemoval={this.handleTodoRemoval} todos={this.state.todos}/>
+          <TodoList handleToggle={this.handleToggle} handleMultipleTodoRemoval={this.handleMultipleTodoRemoval} handleTodoRemoval={this.handleTodoRemoval} todos={displayTodos}/>
         </div>
         <Footer></Footer>
       </div>
