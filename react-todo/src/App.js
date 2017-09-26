@@ -5,7 +5,7 @@ import { TodoForm, TodoList, Footer }  from './components/todo';
 import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/TodoHelpers'
 import {partial,pipe} from './lib/utils'
 import './App.css';
-import {loadTodos} from './lib/TodoService'
+import {loadTodos,createTodo} from './lib/TodoService'
 
 class App extends Component {
   
@@ -63,7 +63,7 @@ class App extends Component {
     
   }
 
-  handleSubmit = (event) => {
+ handleSubmit = async (event) => {
     event.preventDefault();
 
     if(this.state.currentTodo === ""){
@@ -79,14 +79,17 @@ class App extends Component {
       isComplete:false
     }
 
-    const todos = addTodo(this.state.todos,newTodo);
-    
-    this.setState(
-      {
-        todos,
-        currentTodo: ''
-      }
-    )
+    createTodo(newTodo).then((todo) => {
+      
+      const todos = addTodo(this.state.todos,todo);
+      
+      this.setState(
+        {
+          todos,
+          currentTodo: ''
+        }
+      )
+    })
   }
 
   render() {
