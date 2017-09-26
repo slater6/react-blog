@@ -5,7 +5,7 @@ import { TodoForm, TodoList, Footer }  from './components/todo';
 import {addTodo, findById, toggleTodo, updateTodo, removeTodo, filterTodos} from './lib/TodoHelpers'
 import {partial,pipe} from './lib/utils'
 import './App.css';
-import {loadTodos,createTodo} from './lib/TodoService'
+import {loadTodos,createTodo, saveTodo, deleteTodo} from './lib/TodoService'
 
 class App extends Component {
   
@@ -26,13 +26,21 @@ class App extends Component {
   }
 
   handleToggle = (id) => {
-    const getUpdateTodos = pipe (findById, toggleTodo, partial(updateTodo,this.state.todos))
-    const updatedTodos = getUpdateTodos(id,this.state.todos)
-    this.setState(
-      {
-        todos:updatedTodos
-      }
-    );
+    const getToggleTodo = pipe (findById, toggleTodo)
+    const updated = getToggleTodo(id,this.state.todos)
+    const getUpdateTodos = partial(updateTodo,this.state.todos)
+    const updatedTodos = getUpdateTodos(updated)
+    saveTodo(updated).then( () => {
+      this.setState(
+        {
+          todos:updatedTodos
+        }
+      );
+
+      this.showTempMessage(`Todo: ${updated.name} Status Updated!`)
+
+    })
+  
   }
 
   handleInputChange = (event) => {
@@ -46,6 +54,14 @@ class App extends Component {
 
     const todos = this.state.todos.filter(( todo ) => !todo.isComplete)
 
+    this.state.todos.map((todo) => {
+      if(todo.isComplete){
+        deleteTodo(todo.id).then(() => {
+          this.showTempMessage(`Todo: ${todo.name} Deleted!`)
+        })
+      }
+    })
+
     this.setState({
       todos 
     })
@@ -56,11 +72,17 @@ class App extends Component {
     
     evt.preventDefault();
 
-    const todos = removeTodo(this.state.todos, id)
-
-    this.setState({
-      todos 
+    deleteTodo(id).then(() => {
+      const todos = removeTodo(this.state.todos, id)
+    
+      this.setState({
+        todos 
+      })
+      
+      this.showTempMessage(`Todo Deleted!`)
     })
+
+    
     
   }
 
