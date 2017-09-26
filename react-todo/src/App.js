@@ -12,7 +12,8 @@ class App extends Component {
   state = {
     todos:[],
     currentTodo: '',
-    errorMessage: ''
+    errorMessage: '',
+    successMessage: ''
   }
 
   static contextTypes = {
@@ -89,7 +90,14 @@ class App extends Component {
           currentTodo: ''
         }
       )
+
+      this.showTempMessage('Todo Saved!')
     })
+  }
+
+  showTempMessage = (message) => {
+    this.setState({ successMessage : message});
+    setTimeout(() => this.setState({successMessage:''}),2500)
   }
 
   render() {
@@ -103,6 +111,7 @@ class App extends Component {
         <div className="Todo-App">
           <TodoForm handleInputChange={this.handleInputChange} handleSubmit={this.handleSubmit} currentTodo={this.state.currentTodo}/>
           <span className="error">{this.state.errorMessage}</span>
+          <span className="success">{this.state.successMessage}</span>
           <TodoList handleToggle={this.handleToggle} handleMultipleTodoRemoval={this.handleMultipleTodoRemoval} handleTodoRemoval={this.handleTodoRemoval} todos={displayTodos}/>
         </div>
         <Footer></Footer>

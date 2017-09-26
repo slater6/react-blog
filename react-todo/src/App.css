@@ -60,11 +60,15 @@ li a{
   margin-top:5px;
 }
 
-.error{
+.error, .success{
   display: inline-block;
   margin-top: 5px;
   color:red;
   height:20px;
+}
+
+.success{
+  color:green;
 }
 
 .Footer {
