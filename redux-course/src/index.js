@@ -2,15 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import store from './stores/store'
 import registerServiceWorker from './registerServiceWorker';
 
-const state = {
-    todos:[
-        {id:1, name : 'Render Static UI', isComplete:true},
-        {id:2, name : 'Create Initial State', isComplete:true},
-        {id:3, name : 'Use State to Render UI', isComplete:false}
-    ]
-}
+const state = store.getState()
 
-ReactDOM.render(<App todos={state.todos} />, document.getElementById('root'));
+ReactDOM.render(<App {...state} />, document.getElementById('root'));
 registerServiceWorker();
