@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
+import Message from './components/Message'
 import './App.css';
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
         </header>
         <div className="Todo-App">
           <TodoForm />
+          <Message message="Hello There"/>
           <TodoList />
         </div>
       </div>
