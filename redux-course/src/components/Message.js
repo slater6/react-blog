@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
 const Message = (props) => (
     props.message 
@@ -6,4 +7,9 @@ const Message = (props) => (
         : null
 )
 
-export default Message;
+
+export default connect(
+    (state) => ({
+        message: state.message
+    })
+)(Message)
