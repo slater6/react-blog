@@ -1,9 +1,12 @@
-import {getTodos, createTodo, updateTodo} from '../lib/todoServices'
+import {getTodos, createTodo, updateTodo, deleteTodo} from '../lib/todoServices'
 import {showMessage} from './message'
 
 export const TODO_ADD = 'TODO_ADD'
 export const TODO_REPLACE = 'TODO_REPLACE'
 export const TODOS_LOAD = 'TODOS_LOAD'
+export const TODOS_DELETE = 'TODOS_DELETE'
+export const TODOS_ACTIVE = 'active'
+export const TODOS_COMPLETED = 'completed'
 export const CURRENT_UPDATE = 'CURRENT_UPDATE'
 
 const initState = {
@@ -11,27 +14,11 @@ const initState = {
     currentTodo: ''
 }
 
-export const updateCurrent = (val) => (
-    {
-        type:CURRENT_UPDATE,
-        payload:val
-    }
-)
-
-export const loadTodos = (todos) => ({
-    type: TODOS_LOAD,
-    payload:todos
-})
-
-export const addTodo = (todo) => ({
-    type: TODO_ADD,
-    payload:todo
-})
-
-export const replaceTodo = (todo) => ({
-    type: TODO_REPLACE,
-    payload:todo
-})
+export const updateCurrent = (val) => ({type:CURRENT_UPDATE,payload:val})
+export const loadTodos = (todos) => ({type: TODOS_LOAD,payload:todos})
+export const addTodo = (todo) => ({type: TODO_ADD,payload:todo})
+export const replaceTodo = (todo) => ({type: TODO_REPLACE,payload:todo})
+export const removeTodo = (id) => ({type: TODOS_DELETE,payload:id})
 
 export const fetchTodos = () => {
     return (dispatch) => {
@@ -62,6 +49,26 @@ export const toggleTodo = (id) => {
     } 
 }
 
+export const destroyTodo = (id) => {
+    return (dispatch) => {
+        dispatch(showMessage('Deleting Todo'))
+        deleteTodo(id)
+        .then(() => dispatch(removeTodo(id))
+        )
+    } 
+}
+
+export const getVisibleTodos = (todos, filter) => {
+    switch(filter){
+        case TODOS_ACTIVE:
+            return todos.filter(todo => !todo.isComplete);
+        case TODOS_COMPLETED:
+            return todos.filter(todo => todo.isComplete);
+        default :
+            return todos
+    }
+}
+
 export default (state = initState,action) => {
 
     switch(action.type){
@@ -73,6 +80,8 @@ export default (state = initState,action) => {
             return {...state, todos: action.payload}
         case TODO_REPLACE:
             return {...state, todos: state.todos.map( t => t.id === action.payload.id ? action.payload : t )}
+        case TODOS_DELETE:
+            return {...state, todos: state.todos.filter( todo => todo.id !== action.payload)}
         default:
              return state;
     }

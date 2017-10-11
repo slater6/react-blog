@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 import Message from './components/Message'
+import Footer from './components/Footer'
 import './App.css';
 
 class App extends Component {
@@ -13,11 +15,17 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React(Redux) - To Do App</h1>
         </header>
-        <div className="Todo-App">
-          <TodoForm />
-          <Message message="Hello There"/>
-          <TodoList />
-        </div>
+        <Router>
+          <div className="Todo-App">
+            <TodoForm />
+            <Message message="Hello There"/>
+            <Route path='/:filter?' render={({match}) => (
+                <TodoList filter={match.params.filter}/>
+            )}/>
+            
+            <Footer></Footer>
+          </div>
+        </Router>
       </div>
     );
   }
