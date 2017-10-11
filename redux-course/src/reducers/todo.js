@@ -55,7 +55,7 @@ export const toggleTodo = (id) => {
         dispatch(showMessage('Updating Todo'))
         const {todos} = getState().todo
         const todo = todos.find(t => t.id === id)
-        const toggled = {...todo, isCompleted: !todo.isCompleted}
+        const toggled = {...todo, isComplete: !todo.isComplete}
         updateTodo(toggled)
         .then(res => dispatch(replaceTodo(res))
         )

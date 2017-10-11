@@ -23,8 +23,6 @@ export const updateTodo = (todo) => {
             'Accept': 'application/json',
             'Content-Type':'application/json'
         },
-        body:JSON.stringify({
-            todo
-        })
+        body:JSON.stringify(todo)
     }).then( res => res.json())
 }
