@@ -3,9 +3,9 @@ import * as constants from '../actions/constants';
 const balance = (state = 0, action) => {
   switch (action.type) {
     case constants.SET_BALANCE:
-      return action.balace;
+      return action.balance;
     default:
-      return balace;
+      return balance;
   }
 };
 
