@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 export class Wallet extends Component {
   render() {
+    console.log(this.props);
     return (
       <div>
         <h1 className="balance">Wallet Balance: {this.props.balance}</h1>
@@ -12,5 +13,5 @@ export class Wallet extends Component {
 }
 
 export default connect(state => {
-  balance: state.balance;
+  return { balance: state };
 }, {})(Wallet);
