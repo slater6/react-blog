@@ -9,4 +9,28 @@ describe('balanceReducer', () => {
       balanceReducer(undefined, { type: constants.SET_BALANCE, balance })
     ).toEqual(balance);
   });
+
+  it('deposits into the balance', () => {
+    const deposit = 10;
+    const initialSate = 5;
+
+    expect(
+      balanceReducer(initialSate, {
+        type: constants.DEPOSIT,
+        deposit
+      })
+    ).toEqual(initialSate + deposit);
+  });
+
+  it('withdraws from the balance', () => {
+    const withdraw = 10;
+    const initialSate = 20;
+
+    expect(
+      balanceReducer(initialSate, {
+        type: constants.WITHDRAW,
+        withdraw
+      })
+    ).toEqual(initialSate - withdraw);
+  });
 });

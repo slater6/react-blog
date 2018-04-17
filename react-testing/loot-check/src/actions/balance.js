@@ -5,3 +5,17 @@ export const setBalance = balance => {
     balance
   };
 };
+
+export const deposit = deposit => {
+  return {
+    type: constants.DEPOSIT,
+    deposit
+  };
+};
+
+export const withdraw = withdraw => {
+  return {
+    type: constants.WITHDRAW,
+    withdraw
+  };
+};
