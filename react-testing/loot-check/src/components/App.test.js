@@ -9,7 +9,11 @@ describe('App', () => {
     expect(app).toMatchSnapshot();
   });
 
-  it('contains a connected allet component', () => {
+  it('contains a connected Wallet component', () => {
     expect(app.find('Connect(Wallet)').exists()).toBe(true);
+  });
+
+  it('contains a connected Bitcoin component', () => {
+    expect(app.find('Connect(Loot)').exists()).toBe(true);
   });
 });
